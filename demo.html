@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="./layui.css" rel="stylesheet" />
+    <script src="./jquery-3.3.1.js"></script>
+    <script src="./layui.js"></script>
+    <script src="./excel.min.js"></script>
+    <script src="./table.js"></script>
+</head>
+<body>
+    <table class="layui-hide" id="landAreaTb" lay-filter="landAreaTb"></table>
+    <script>
+            var config = {
+                title: '全省建设用地审批情况统计表',
+                exportName: '全省建设用地审批情况统计表',
+                el: '#landAreaTb',
+                url:'http://172.16.12.33:8002/JSYDSP/GetReportData',
+                page: false,
+                method: 'get',
+                hideFilterBtn: true,
+                userConfig: { height: 'full-200' },
+                mergeDataConfig: {
+                    titles: ['LX'],
+                    indexes: [0],
+                    fixedArray: [true]
+                },
+                alignConfig: {
+                    columnIndexes:[0,1]
+                },
+                params: {
+                    ordertype: '',
+                    ordername: '',
+                    exportfields: '',
+                }, cols:
+                [
+                    [
+                        { colspan: 23, title: '全省建设用地审批情况统计表', unresize: true },
+                    ],
+                    [
+                        { field: 'LX', rowspan: 2, title: '审批类型', unresize: true, width: 250, fixed: true},
+                        { field: 'XZQ', rowspan: 2, title: '市/州地区', unresize: true, width: 120, fixed: true  },
+                        { colspan: 7, title: '批准建设用地合计', unresize: true},
+                        { colspan: 7, title: '国务院批准建设用地', unresize: true },
+                        { colspan: 7, title: '省级政府批准建设用地', unresize: true }
+                    ],
+                    [
+
+                        { field: 'ZS', title: '数量', unresize: true,width:80 },
+                        { field: 'ZZMJ', title: '总面积', unresize: true,width: 90 },
+                        { field: 'ZXZJSYD', title: '新增建设用地', unresize: true,width: 120 },
+                        { field: 'ZNYD', title: '农用地', unresize: true, width: 90 },
+                        { field: 'ZGD', title: '耕地', unresize: true, width: 90 },
+                        { field: 'ZJSYD', title: '建设用地', unresize: true, width: 90 },
+                        { field: 'ZWLYD', title: '未利用地', unresize: true, width: 90 },
+                        { field: 'GS', title: '数量', unresize: true,width: 80 },
+                        { field: 'GZMJ', title: '总面积', unresize: true, width: 90 },
+                        { field: 'GXZJSYD', title: '新增建设用地', unresize: true, width: 120 },
+                        { field: 'GNYD', title: '农用地', unresize: true, width: 90 },
+                        { field: 'GGD', title: '耕地', unresize: true, width: 90 },
+                        { field: 'GJSYD', title: '建设用地', unresize: true, width: 90 },
+                        { field: 'GWLYD', title: '未利用地', unresize: true, width: 90 },
+                        { field: 'SS', title: '数量', unresize: true, width: 80 },
+                        { field: 'SZMJ', title: '总面积', unresize: true, width: 90 },
+                        { field: 'SXZJSYD', title: '新增建设用地', unresize: true, width: 120 },
+                        { field: 'SNYD', title: '农用地', unresize: true, width: 90 },
+                        { field: 'SGD', title: '耕地', unresize: true, width: 90 },
+                        { field: 'SJSYD', title: '建设用地', unresize: true, width: 90 },
+                        { field: 'SWLYD', title: '未利用地', unresize: true, width: 90 },
+                    ]
+                ]
+        };
+        $initTable.renderTable(config);
+    </script>
+</body>
+</html>
+

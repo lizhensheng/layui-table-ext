@@ -432,85 +432,73 @@
             let _url
             layui.use('table', function () {
                 var table = layui.table;
-                var url = '/home/GetApiRoot'
-                var root = ''
+                _url =  config.url
                 $.ajax({
-                    url: url,
-                    type: 'get',
+                    url: _url,
+                    type: config.method,
+                    data: Object.assign({}, config.params || {}, { pageIndex: 1, pageSize: 10 }),
                     success: function (res) {
-                        if (res) {
-                            root = res
-                            _url = config.url.indexOf('http') >= 0 ? config.url : root + config.url
-                            $.ajax({
-                                url: _url,
-                                type: config.method,
-                                data: Object.assign({}, config.params || {}, { pageIndex: 1, pageSize: 10 }),
-                                success: function (res) {
-                                    if (res.status == 0) {
-                                        var data = res.data
-                                        var cols = []
-                                        if (!config.cols) {
-                                            if (data.length !== 0) {
-                                                for (var key in data[0]) {
-                                                    let wordWidth = key.length * 12 + 50
-                                                    let canSort = true
-                                                    if (config.canSortFunc && !config.canSortFunc(key)) {
-                                                        canSort = false
-                                                    }
-                                                    cols.push({
-                                                        field: key, title: key, sort: canSort, width: wordWidth, unresize: true
-                                                    })
-                                                }
-                                            }
-                                            cols = [cols]
-                                        } else {
-                                            cols = config.cols
+                        if (res.status == 0) {
+                            var data = res.data
+                            var cols = []
+                            if (!config.cols) {
+                                if (data.length !== 0) {
+                                    for (var key in data[0]) {
+                                        let wordWidth = key.length * 12 + 50
+                                        let canSort = true
+                                        if (config.canSortFunc && !config.canSortFunc(key)) {
+                                            canSort = false
                                         }
-                                        let $tableData = table.render(Object.assign(config.userConfig ? config.userConfig : {}, {
-                                            elem: config.el
-                                            , url: _url
-                                            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                                            , defaultToolbar: [config.hideFilterBtn ? '' : 'filter', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                                                title: '导出'
-                                                , layEvent: 'LAYTABLE_TIPS'
-                                                , icon: 'layui-icon-export'
-                                            }]
-                                            , title: config.title
-                                            , method: config.method || 'get'
-                                            , cols: cols
-                                            //, height: 'full-200' + config.heightDiff ? config.heightDiff:''
-                                            , page: config.page || true, autoSort: false
-                                            , where: config.params || {}, request: {
-                                                pageName: 'pageIndex' //页码的参数名称，默认：page
-                                                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                                            }, response: {
-                                                statusName: 'status' //规定数据状态的字段名称，默认：code
-                                                , statusCode: 0 //规定成功的状态码，默认：0
-                                                , msgName: 'msg' //规定状态信息的字段名称，默认：msg
-                                                , countName: 'count' //规定数据总数的字段名称，默认：count
-                                                , dataName: 'data' //规定数据列表的字段名称，默认：data
-                                            }, done: function (res, curr, count) {
-                                                console.log($tableData)
-                                                _this.hiddenBorderTop($tableData.config.cols)
-                                                //如果是异步请求数据方式，res即为你接口返回的信息。
-                                                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                                                $(".layui-laypage-limits").hide()
-                                                $(".layui-laypage-btn").css({ "margin": "0 10px" })
-                                                $("<style></style>").text(".layui-table-tool-panel{min-width:500px}.layui-table-tool-panel li{float:left}").appendTo($(".layui-table-tool"));
-                                                //设置数据列合并
-                                                if (config.mergeDataConfig) {
-                                                    _this.getMergeDataProvider(config.el.replace('#', ''),  config.mergeDataConfig.titles, config.mergeDataConfig.fixedArray)
-                                                }
-                                            }
-                                        }));
+                                        cols.push({
+                                            field: key, title: key, sort: canSort, width: wordWidth, unresize: true
+                                        })
                                     }
                                 }
-                            })
-
+                                cols = [cols]
+                            } else {
+                                cols = config.cols
+                            }
+                            let $tableData = table.render(Object.assign(config.userConfig ? config.userConfig : {}, {
+                                elem: config.el
+                                , url: _url
+                                , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                                , defaultToolbar: [config.hideFilterBtn ? '' : 'filter', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                                    title: '导出'
+                                    , layEvent: 'LAYTABLE_TIPS'
+                                    , icon: 'layui-icon-export'
+                                }]
+                                , title: config.title
+                                , method: config.method || 'get'
+                                , cols: cols
+                                //, height: 'full-200' + config.heightDiff ? config.heightDiff:''
+                                , page: config.page || true, autoSort: false
+                                , where: config.params || {}, request: {
+                                    pageName: 'pageIndex' //页码的参数名称，默认：page
+                                    , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                                }, response: {
+                                    statusName: 'status' //规定数据状态的字段名称，默认：code
+                                    , statusCode: 0 //规定成功的状态码，默认：0
+                                    , msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                                    , countName: 'count' //规定数据总数的字段名称，默认：count
+                                    , dataName: 'data' //规定数据列表的字段名称，默认：data
+                                }, done: function (res, curr, count) {
+                                    console.log($tableData)
+                                    _this.hiddenBorderTop($tableData.config.cols)
+                                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                                    $(".layui-laypage-limits").hide()
+                                    $(".layui-laypage-btn").css({ "margin": "0 10px" })
+                                    $("<style></style>").text(".layui-table-tool-panel{min-width:500px}.layui-table-tool-panel li{float:left}").appendTo($(".layui-table-tool"));
+                                    //设置数据列合并
+                                    if (config.mergeDataConfig) {
+                                        _this.getMergeDataProvider(config.el.replace('#', ''),  config.mergeDataConfig.titles, config.mergeDataConfig.fixedArray)
+                                    }
+                                }
+                            }));
                         }
-
                     }
-                });
+                })
+
 
                 var id = config.el.indexOf('#') > -1 ? config.el.substr(1) : config.el
                 //头工具栏事件
