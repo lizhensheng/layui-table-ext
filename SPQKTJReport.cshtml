@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "SPQKTJReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/html/nav.css" rel="stylesheet" />
+<link href="~/Content/html/EvaluateIndex.css" rel="stylesheet" />
+<link href="~/Content/html/public.css" rel="stylesheet" />
+<link href="~/Content/html/typo.css" rel="stylesheet" />
+<link href="~/Content/html/css.css" rel="stylesheet" />
+<link href="~/Content/html/select2.css" rel="stylesheet" />
+<link href="~/Content/html/tabs.css" rel="stylesheet" />
+<link href="~/Scripts/laydate/theme/default/laydate.css" rel="stylesheet" />
+<link href="~/Content/html/easyui.css" rel="stylesheet" />
+<link href="~/Scripts/layui/css/layui.css" rel="stylesheet" />
+
+<script type="text/javascript" src="~/Scripts/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="~/Scripts/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="~/Scripts/echarts.min.js"></script>
+<script type="text/javascript" src="~/Scripts/wonderland.js"></script>
+<script type="text/javascript" src="~/Scripts/laydate/laydate.js"></script>
+
+<script type="text/javascript" src="~/Scripts/html/ChartOptions.js"></script>
+
+<script type="text/javascript" src="~/Scripts/html/TableHelper.js"></script>
+<script type="text/javascript" src="~/Scripts/html/reporthelper.js"></script>
+
+<script type="text/javascript" src="~/Areas/JSYDSP/Scripts/dataprovider.js"></script>
+<script type="text/javascript" src="~/Areas/JSYDSP/Scripts/spqktjreport.js"></script>
+<script src="~/Scripts/layui/layui.js"></script>
+<script src="~/Scripts/layui_exts/excel.min.js"></script>
+<script src="~/Scripts/layui_exts/table.js"></script>
+
+<DIV class="Evaluate-section layout-Container">
+    @*<DIV class="leftMenu">
+            <DIV class="widget-head">快捷菜单</DIV>
+            <UL>
+                <LI class="open">
+                    <A>报表中心</A>
+                    <UL>
+                        <LI class="sel"><A>重点项目用地</A> </LI>
+                    </UL>
+                </LI>
+            </UL>
+        </DIV>*@
+    @Html.Partial("~/Views/Shared/_LeftMenuPartial.cshtml")
+    <DIV class="right_content" style="padding-top:100px;">
+        <DIV id="select-conditions">
+            <UL>
+                <LI id="li_time">
+                    <DIV class="li_title">时间:</DIV>
+                    <div class="li_content">
+                        <input type="hidden" id="li_type" value="zycl" readonly="readonly" />
+                        <span class="dateBox">
+                            <input id="jsydsp_part01_date_s" type="text" class="text02 text04" />
+                        </span>至
+                        <span class="dateBox">
+                            <input id="jsydsp_part01_date_e" type="text" class="text02 text04" />
+                        </span>
+                    </div>
+                </LI>
+                <LI id="li_c">
+                </LI>
+            </UL>
+            <span class="export" style="MARGIN-RIGHT: 139px">导出</span>
+            <SPAN class="back">返回</SPAN>
+        </DIV>
+        <DIV id="loyout-Right" class="content-right" style="OVERFLOW: auto;">
+            <DIV class="container">
+                <DIV id="loyout-Right-Middle"></DIV>
+                <DIV id="div_content">
+                    <DIV id="div_tdlyxz">
+                        <DIV id="tdlyxz_01" class="part01">
+                            <DIV class="tableBox">
+                                <DIV class="tableDiv table01 scroll1 scroll">
+                                    <P class="c1_head"><SPAN class="title">全省建设用地审批情况统计表</SPAN></P>
+                                    <p class="c1_unit">
+                                        单位：公顷/ 项目数：宗
+                                    </p>
+
+                                    <table class="layui-hide" id="landAreaTb" lay-filter="landAreaTb"></table>
+
+                                    <br />
+                                </DIV>
+                            </DIV>
+                        </DIV>
+                    </DIV>
+                </DIV>
+            </DIV>
+        </DIV>
+    </DIV>
+</DIV>
+
